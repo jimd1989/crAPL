@@ -16,6 +16,12 @@
 (define ↑↓↓ caddr)
 (define ↑↓↓↓ cadddr)
 
+(define → map)
+(define ←/ foldl)
+(define →/ foldr)
+(define (←// f ⍵) (foldl f (↑ ⍵) (↓ ⍵)))
+(define (→// f ⍵) (foldr f (↑ ⍵) (↓ ⍵)))
+
 (← % abs
      modulo)
 
@@ -30,7 +36,7 @@
 (← ⍳ iota
      (λ (⍺ ⍵) (list-index (λ (x) (equal? ⍺ x)) ⍵)))
 
-(← ⊖ (λ (⍵) (reverse ⍵))
+(← ⊖ reverse
      (λ (⍺ ⍵)
        (let* ((l (≢ ⍵))
               (n (if (negative? ⍺) (- l (% (% ⍺) l)) ⍺)))
@@ -49,12 +55,18 @@
 (define (∇⍴g ⍺ ⍵)
   (if (= (≢ ⍺) 1)
     (↑∞ (↑ ⍺) ⍵)
-    (let ((χ (foldl (λ (acc _)
-                     (let ((r (∇⍴g (↓ ⍺) (↑↓ acc))))
-                       `(,(cons (↑ r) (↑ acc)) ,(↑↓ r))))
-                    (list '() ⍵)
-                    (⍳ (↑ ⍺)))))
+    (let ((χ (←/ (λ (acc _)
+                   (let ((r (∇⍴g (↓ ⍺) (↑↓ acc))))
+                     `(,(cons (↑ r) (↑ acc)) ,(↑↓ r))))
+                         (list '() ⍵)
+                         (⍳ (↑ ⍺)))))
       `(,(⊖ (↑ χ)) ,(↑↓ χ)))))
 
 (← ⍴ ∇⍴f
      (λ (⍺ ⍵) (↑ (∇⍴g ⍺ (apply circular-list ⍵)))))
+
+(← ⌈ (λ (⍵  ) (inexact->exact (ceiling ⍵)))
+     (λ (⍺ ⍵) (if (> ⍺ ⍵) ⍺ ⍵)))
+
+(← ⌊ (λ (⍵  ) (inexact->exact (floor ⍵)))
+     (λ (⍺ ⍵) (if (< ⍺ ⍵) ⍺ ⍵)))

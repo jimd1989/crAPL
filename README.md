@@ -9,10 +9,6 @@ An experimental collection of procedures that mimic select [APL](https://en.wiki
 
 # Implemented primitives
 
-## (λ (x ...) y ...)
-
-Scheme's normal lambda form can be represented with the Greek symbol, to make it more concise. This is nothing more than syntax sugar.
-
 ## (← x f . g)
 
 APL functions are either monadic (one argument) or dyadic (two). The ← form defines function `x` with two procedures `f` and `g`. `f` is applied to `x`'s argument in monadic cases, and `g` to `x`'s arguments in dyadic cases. If `g` is omitted, `x` is strictly a monadic function.
@@ -144,6 +140,56 @@ Reshape a flat list ⍵ by the dimensions specified in list ⍺. If ⍵ is not l
           (((0 1 2) (3 0 1) (2 3 0))
            ((1 2 3) (0 1 2) (3 0 1))
            ((2 3 0) (1 2 3) (0 1 2)))
+
+## (⌈ ⍵)
+
+The ceiling of a decimal value.
+
+    (⌈ 3.14)
+    
+          4
+
+## (⌈ ⍺ ⍵)
+
+Select the greater value between ⍺ and ⍵.
+
+    (⌈ 1 2)
+    
+          2
+
+## (⌊ ⍵)
+
+The floor of a decimal value.
+
+    (⌊ 3.14)
+    
+          3
+
+## (⌊ ⍺ ⍵)
+
+Select the lesser value between ⍺ and ⍵.
+
+    (⌊ 1 2)
+    
+          1
+
+# Other symbols
+
+## (λ (x ...) y ...)
+
+Scheme's normal lambda form can be represented with the Greek symbol, to make it more concise. This is nothing more than syntax sugar.
+
+## (→ f xs)
+
+Sugar for `(map f xs)`.
+
+## (←\ f acc xs)
+
+Sugar for `(foldl f acc xs)`. The procedure `(←\\ f xs)` performs a left fold where the initial accumulator value is the first item in list `xs.`
+
+## (→\ f acc xs)
+
+Sugar for `(foldr f acc xs)`. The procedure `(→\\ f xs)` performs a right fold where the initial accumulator value is the first item in list `xs.`
 
 # Caveats
 
