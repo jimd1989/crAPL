@@ -191,6 +191,14 @@ Sugar for `(foldl f acc xs)`. The procedure `(←\\ f xs)` performs a left fold 
 
 Sugar for `(foldr f acc xs)`. The procedure `(→\\ f xs)` performs a right fold where the initial accumulator value is the first item in list `xs.`
 
+# Misc examples
+
+Max value of every row in a matrix
+
+    (→ (λ (⍵) (←// ⌈ ⍵)) (⍴ '(3 3) (⍳ 9)))
+    
+          (2 5 8)
+
 # Caveats
 
 Way too many to list. I should reiterate that this is not an APL implementation. I'm hoping to implement more primitives as time allows.
