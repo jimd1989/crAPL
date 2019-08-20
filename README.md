@@ -141,6 +141,17 @@ Reshape a flat list ⍵ by the dimensions specified in list ⍺. If ⍵ is not l
            ((1 2 3) (0 1 2) (3 0 1))
            ((2 3 0) (1 2 3) (0 1 2)))
 
+## (⍉ ⍵)
+
+Transpose a matrix, turning its rows into columns.
+
+    (⍉ (⍴ '(4 4) (⍳ 16)))
+    
+          ((0 4 8  12)
+           (1 5 9  13)
+           (2 6 10 14)
+           (3 7 11 15))
+
 ## (⌈ ⍵)
 
 The ceiling of a decimal value.

@@ -65,6 +65,13 @@
 (← ⍴ ∇⍴f
      (λ (⍺ ⍵) (↑ (∇⍴g ⍺ (apply circular-list ⍵)))))
 
+(define (∇⍉f ⍵)
+  (cond ((or (not (list? ⍵)) (not (list? (↑ ⍵)))) ⍵)
+        ((null? (↑ ⍵)) '())
+        (else (cons (→ ↑ ⍵) (∇⍉f (→ ↓ ⍵))))))
+
+(← ⍉ ∇⍉f)
+
 (← ⌈ (λ (⍵  ) (inexact->exact (ceiling ⍵)))
      (λ (⍺ ⍵) (if (> ⍺ ⍵) ⍺ ⍵)))
 
