@@ -209,13 +209,13 @@ Scheme's normal lambda form can be represented with the Greek symbol, to make it
 
 Sugar for `(map f xs)`.
 
-### (←\ f acc xs)
+### (←/ f acc xs)
 
-Sugar for `(foldl f acc xs)`. The procedure `(←\\ f xs)` performs a left fold where the initial accumulator value is the first item in list `xs.`
+Sugar for `(foldl f acc xs)`. The procedure `(←// f xs)` performs a left fold where the initial accumulator value is the first item in list `xs.`
 
-### (→\ f acc xs)
+### (→/ f acc xs)
 
-Sugar for `(foldr f acc xs)`. The procedure `(→\\ f xs)` performs a right fold where the initial accumulator value is the first item in list `xs.`
+Sugar for `(foldr f acc xs)`. The procedure `(→// f xs)` performs a right fold where the initial accumulator value is the first item in list `xs.`
 
 ### (⌂ f . xs)
 
