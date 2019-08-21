@@ -122,6 +122,26 @@ Rotate the topmost axis of ⍵ by ⍺ items. ⍺ can be a negative integer to ro
     
           (8 0 1 2 3 4 5 6 7)
 
+### (⌽ ⍵)
+
+Reverse the last axis of ⍵.
+
+    (⌽ (⍴ '(3 3) (⍳ 9)))
+    
+          ((2 1 0)
+           (5 4 3)
+           (8 7 6))
+
+### (⌽ ⍺ ⍵)
+
+Rotate the last axis of ⍵ by ⍺ items. ⍺ can be a negative integer here too.
+
+    (⌽ 1 (⍴ '(3 3) (⍳ 9)))
+    
+          ((1 2 0)
+           (4 5 3)
+           (7 8 6))
+
 ### (⍴ ⍵)
 
 The shape of an arbitrarily deep nested list. Dimensions are measured according to the length of the first item at any level in the list. If a nested list is not balanced, this will return inaccurate measurements.

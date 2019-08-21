@@ -11,6 +11,7 @@
 (import srfi-1 (chicken pretty-print))
 (load "list-procedures.scm")
 (load "conversions.scm")
+(load "io.scm")
 
 (define-syntax λ
   (syntax-rules () ((_ . x) (lambda . x))))
@@ -41,6 +42,14 @@
 
 (← ⊖ reverse
      ∇⊖g)
+
+(define (last-axis f ⍵)
+  (if (not (list? ⍵))
+    (f ⍵)
+    (→ f ⍵)))
+
+(← ⌽ (λ (⍵  ) (last-axis (λ (x) (⊖ x)) ⍵))
+     (λ (⍺ ⍵) (last-axis (λ (x) (⊖ ⍺ x)) ⍵)))
 
 (define (↑∞ ⍺ ⍵∞)
   `(,(↑ ⍺ ⍵∞) ,(↓ ⍺ ⍵∞)))
