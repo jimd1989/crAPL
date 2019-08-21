@@ -30,7 +30,7 @@ crAPL procedures generally assume to be working on some kind of list. They will 
 
 # Implemented primitives
 
-## (↑ ⍵)
+### (↑ ⍵)
 
 Take the head of list ⍵, like `(car)`.
 
@@ -38,7 +38,7 @@ Take the head of list ⍵, like `(car)`.
     
           1
 
-## (↑ ⍺ ⍵)
+### (↑ ⍺ ⍵)
 
 Take ⍺ items from the front of list ⍵.
 
@@ -46,7 +46,7 @@ Take ⍺ items from the front of list ⍵.
     
           (1 2)
 
-## (↓ ⍵)
+### (↓ ⍵)
 
 Take the tail of list ⍵, like `(cdr)`. Note how this differs from the monadic definition of `↓` in APL. Primitive equivalents of `(cadr)`, `(caar)`, and other common combinations have also been defined as `↑↓`, `↑↑`, etc.
 
@@ -54,7 +54,7 @@ Take the tail of list ⍵, like `(cdr)`. Note how this differs from the monadic 
     
           (2 3)
 
-## (↓ ⍺ ⍵)
+### (↓ ⍺ ⍵)
 
 Drop ⍺ items from the front of list ⍵.
 
@@ -62,7 +62,7 @@ Drop ⍺ items from the front of list ⍵.
     
           (3 4 5 6)
 
-## (≢ ⍵)
+### (≢ ⍵)
 
 The length of the topmost axis (list) of ⍵.
 
@@ -71,7 +71,7 @@ The length of the topmost axis (list) of ⍵.
           3
 
 
-## (% ⍵)
+### (% ⍵)
 
 The absolute value of ⍵.
 
@@ -80,7 +80,7 @@ The absolute value of ⍵.
           1
 
 
-## (% ⍺ ⍵)
+### (% ⍺ ⍵)
 
 ⍺ modulo ⍵.
 
@@ -88,7 +88,7 @@ The absolute value of ⍵.
     
           2
 
-## (⍳ ⍵)
+### (⍳ ⍵)
 
 A list of integers ⍵ items long, counting up from 0. This differs from APL, which begins its count at 1.
 
@@ -96,7 +96,7 @@ A list of integers ⍵ items long, counting up from 0. This differs from APL, wh
     
           (0 1 2 3 4 5 6 7 8)
 
-## (⍳ ⍺ ⍵)
+### (⍳ ⍺ ⍵)
 
 The first index of ⍵ that matches ⍺.
 
@@ -104,7 +104,7 @@ The first index of ⍵ that matches ⍺.
     
           1
 
-## (⊖ ⍵)
+### (⊖ ⍵)
 
 Reverse the topmost axis (list) of ⍵.
 
@@ -114,7 +114,7 @@ Reverse the topmost axis (list) of ⍵.
            (4 5 6)
            (1 2 3))
 
-## (⊖ ⍺ ⍵)
+### (⊖ ⍺ ⍵)
 
 Rotate the topmost axis of ⍵ by ⍺ items. ⍺ can be a negative integer to rotate in the opposite direction.
 
@@ -122,7 +122,7 @@ Rotate the topmost axis of ⍵ by ⍺ items. ⍺ can be a negative integer to ro
     
           (8 0 1 2 3 4 5 6 7)
 
-## (⍴ ⍵)
+### (⍴ ⍵)
 
 The shape of an arbitrarily deep nested list. Dimensions are measured according to the length of the first item at any level in the list. If a nested list is not balanced, this will return inaccurate measurements.
 
@@ -130,7 +130,7 @@ The shape of an arbitrarily deep nested list. Dimensions are measured according 
     
           (3 4)
 
-## (⍴ ⍺ ⍵)
+### (⍴ ⍺ ⍵)
 
 Reshape a flat list ⍵ by the dimensions specified in list ⍺. If ⍵ is not long enough to fill these dimensions, it will repeat.
 
@@ -140,7 +140,7 @@ Reshape a flat list ⍵ by the dimensions specified in list ⍺. If ⍵ is not l
            ((1 2 3) (0 1 2) (3 0 1))
            ((2 3 0) (1 2 3) (0 1 2)))
 
-## (⍉ ⍵)
+### (⍉ ⍵)
 
 Transpose a matrix, turning its rows into columns.
 
@@ -151,7 +151,7 @@ Transpose a matrix, turning its rows into columns.
            (2 6 10 14)
            (3 7 11 15))
 
-## (⌈ ⍵)
+### (⌈ ⍵)
 
 The ceiling of a decimal value.
 
@@ -159,7 +159,7 @@ The ceiling of a decimal value.
     
           4
 
-## (⌈ ⍺ ⍵)
+### (⌈ ⍺ ⍵)
 
 Select the greater value between ⍺ and ⍵.
 
@@ -167,7 +167,7 @@ Select the greater value between ⍺ and ⍵.
     
           2
 
-## (⌊ ⍵)
+### (⌊ ⍵)
 
 The floor of a decimal value.
 
@@ -175,7 +175,7 @@ The floor of a decimal value.
     
           3
 
-## (⌊ ⍺ ⍵)
+### (⌊ ⍺ ⍵)
 
 Select the lesser value between ⍺ and ⍵.
 
@@ -183,7 +183,7 @@ Select the lesser value between ⍺ and ⍵.
     
           1
 
-## (߸ ⍵)
+### (߸ ⍵)
 
 Flatten a list.
 
@@ -191,7 +191,7 @@ Flatten a list.
     
           (1 2 3 4 5 6 7 8 9)
 
-## (߸ ⍺ ⍵)
+### (߸ ⍺ ⍵)
 
 Append two lists. Technically not a dyadic function; you can concatenate any number of items since this is just an alias for `(append)`.
 
@@ -201,27 +201,27 @@ Append two lists. Technically not a dyadic function; you can concatenate any num
 
 # Other symbols
 
-## (λ (x ...) y ...)
+### (λ (x ...) y ...)
 
 Scheme's normal lambda form can be represented with the Greek symbol, to make it more concise. This is nothing more than syntax sugar.
 
-## (→ f xs)
+### (→ f xs)
 
 Sugar for `(map f xs)`.
 
-## (←\ f acc xs)
+### (←\ f acc xs)
 
 Sugar for `(foldl f acc xs)`. The procedure `(←\\ f xs)` performs a left fold where the initial accumulator value is the first item in list `xs.`
 
-## (→\ f acc xs)
+### (→\ f acc xs)
 
 Sugar for `(foldr f acc xs)`. The procedure `(→\\ f xs)` performs a right fold where the initial accumulator value is the first item in list `xs.`
 
-## (⌂ f . xs)
+### (⌂ f . xs)
 
 Sugar for `(apply f xs)`.
 
-## ⍬
+### ⍬
 
 Sugar for the null list `'()`. `⍬?` is an alias for `null?`.
 
