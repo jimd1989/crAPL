@@ -10,7 +10,7 @@ An experimental collection of procedures that mimic select [APL](https://en.wiki
 
 # Behavior
 
-Much like in APL, crAPL makes use of single-glyph functions that carry both monadic (single argument) and dyadic (two arguments) definitions. The procedures of a monad and dyad with the same symbol can be very different from one another. Scheme's parentheses make the nature of a function application completely unambiguous. APL monads and dyads (f) are of the forms
+Much like in APL, crAPL makes use of single-glyph functions that carry both monadic (single argument) and dyadic (two arguments) definitions. The procedures of a monad and dyad with the same symbol can be very different from one another. Scheme's parentheses make the nature of a function application completely unambiguous. APL monads and dyads `f` are of the forms
 
       f ⍵
     ⍺ f ⍵
