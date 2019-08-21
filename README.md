@@ -223,7 +223,7 @@ Sugar for `(apply f xs)`.
 
 ### ⍬
 
-Sugar for the null list `'()`. `⍬?` is an alias for `null?`.
+Sugar for the null list `'()`. `⍬?` is an alias for `(null?)`.
 
 # Misc examples
 
