@@ -1,35 +1,34 @@
 # Intro
 
-An experimental collection of procedures that mimic select [APL](https://en.wikipedia.org/wiki/APL_%28programming_language%29) concepts, using a similar syntax. This is _not_ and will never be an APL implementation; I'm just taking ideas that I like and bolting them on to Scheme. Some syntax and behavior will differ from what's expected in APL. These functions replace the notions of vectors/matrices/tensors with nested Lisp lists. They're convenience functions that are meant to play nicely with Scheme's normal maps, folds, and filters.
+An experimental collection of procedures that mimic select [APL](https://en.wikipedia.org/wiki/APL_%28programming_language%29) concepts, using a similar syntax. My goal is to make working with lists (especially multi-dimensional ones) painless and concise. This is _not_ and will never be an APL implementation; I'm just taking ideas I like and bolting them on to Scheme. Some syntax and most behavior will differ from what's expected in APL.
 
 # Requirements
 
 + [Chicken Scheme v. 5](https://call-cc.org/)
 + srfi-1
++ An [APL input method](https://www.dyalog.com/apl-font-keyboard.htm) (you may also want to edit this file to include extra symbols like λ, ⌂, etc.)
 
-# Implemented primitives
+# Behavior
 
-## (← x f . g)
+Much like in APL, crAPL makes use of single-glyph functions that carry both monadic (single argument) and dyadic (two arguments) definitions. The procedures of a monad and dyad with the same symbol can be very different from one another. Scheme's parentheses make the nature of a function application completely unambiguous. APL monads and dyads (f) are of the forms
 
-APL functions are either monadic (one argument) or dyadic (two). The ← form defines function `x` with two procedures `f` and `g`. `f` is applied to `x`'s argument in monadic cases, and `g` to `x`'s arguments in dyadic cases. If `g` is omitted, `x` is strictly a monadic function.
+      f ⍵
+    ⍺ f ⍵
 
-If the expected form of a monadic APL function `f` is
-
-    f ⍵
-
-Then its Scheme application is
+respectively. The Scheme applications of this same `f` are unsurprisingly
 
     (f ⍵)
+    (f ⍺ ⍵)
 
-Likewise the dyad `g` of the form
+Some APL symbols conflict with Scheme syntax. They are represented as follows in crAPL
 
-    ⍺ g ⍵
+    | → %
+    . → ·
+    , → ߸
 
-Is invoked as
+crAPL procedures generally assume to be working on some kind of list. They will not check for other data types. These are standard Lisp lists; there is no extra tagging of rank, etc. As such, there are no implicit mapping operations of scalars against vectors, vectors against vectors, or anything else. Use normal Scheme functions like `(map)`.
 
-    (g ⍺ ⍵)
-
-This is similar to the way comparison operators work in Lisp. 
+# Implemented primitives
 
 ## (↑ ⍵)
 
@@ -184,6 +183,22 @@ Select the lesser value between ⍺ and ⍵.
     
           1
 
+## (߸ ⍵)
+
+Flatten a list.
+
+    (߸ '((1 2 (3))(4 5 (6))(7 8 (9))))
+    
+          (1 2 3 4 5 6 7 8 9)
+
+## (߸ ⍺ ⍵)
+
+Append two lists. Technically not a dyadic function; you can concatenate any number of items since this is just an alias for `(append)`.
+
+    (߸ '(1 2 3) '(4 5 6))
+    
+          (1 2 3 4 5 6)
+
 # Other symbols
 
 ## (λ (x ...) y ...)
@@ -201,6 +216,14 @@ Sugar for `(foldl f acc xs)`. The procedure `(←\\ f xs)` performs a left fold 
 ## (→\ f acc xs)
 
 Sugar for `(foldr f acc xs)`. The procedure `(→\\ f xs)` performs a right fold where the initial accumulator value is the first item in list `xs.`
+
+## (⌂ f . xs)
+
+Sugar for `(apply f xs)`.
+
+## ⍬
+
+Sugar for the null list `'()`. `⍬?` is an alias for `null?`.
 
 # Misc examples
 

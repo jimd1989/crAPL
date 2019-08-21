@@ -32,4 +32,4 @@
 (define v (→ (λ (⍵) (←// ⌈ ⍵)) (⍉ M)))
 (define limit (→ ⌊ h v))
 (define heights (→ (λ (⍵) (→ - limit ⍵)) M))
-(define max-growth (apply + (flatten heights)))
+(define max-growth (⌂ + (߸ heights)))

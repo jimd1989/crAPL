@@ -1,26 +1,24 @@
+; APL syntax transformers and implementations of their functionality, where
+; need be.
+
+; some APL syntax conflicts with Lisp syntax. The following operators are
+; redefined:
+;
+; | → %
+; . → ·
+; , → ߸
+
 (import srfi-1 (chicken pretty-print))
+(load "list-procedures.scm")
+(load "conversions.scm")
 
 (define-syntax λ
   (syntax-rules () ((_ . x) (lambda . x))))
 
 (define-syntax ←
   (syntax-rules ()
-    ((_ x f g)
-     (define (x . ⍵)
-       (if (= (length ⍵) 1) (apply f ⍵) (apply g ⍵))))
-    ((_ x f)
-     (define (x ⍵) (f ⍵)))))
-
-(define ↑↑ caar)
-(define ↑↓ cadr)
-(define ↑↓↓ caddr)
-(define ↑↓↓↓ cadddr)
-
-(define → map)
-(define ←/ foldl)
-(define →/ foldr)
-(define (←// f ⍵) (foldl f (↑ ⍵) (↓ ⍵)))
-(define (→// f ⍵) (foldr f (↑ ⍵) (↓ ⍵)))
+    ((_ x f  ) (define (x ⍵) (f ⍵)))
+    ((_ x f g) (define (x . ⍵) (if (= (≢ ⍵) 1) (⌂ f ⍵) (⌂ g ⍵))))))
 
 (← % abs
      modulo)
@@ -36,44 +34,47 @@
 (← ⍳ iota
      (λ (⍺ ⍵) (list-index (λ (x) (equal? ⍺ x)) ⍵)))
 
+(define (∇⊖g ⍺ ⍵)
+  (let* ((len (≢ ⍵))
+         (rot (if (negative? ⍺) (- len (% (% ⍺) len)) ⍺)))
+    (↑ len (↓ rot (⌂ circular-list ⍵)))))
+
 (← ⊖ reverse
-     (λ (⍺ ⍵)
-       (let* ((l (≢ ⍵))
-              (n (if (negative? ⍺) (- l (% (% ⍺) l)) ⍺)))
-         (↑ l (↓ n (apply circular-list ⍵))))))
+     ∇⊖g)
 
 (define (↑∞ ⍺ ⍵∞)
   `(,(↑ ⍺ ⍵∞) ,(↓ ⍺ ⍵∞)))
 
 (define (∇⍴f ⍵)
-  (if (list? ⍵)
-    (if (list? (↑ ⍵))
-      (cons (≢ ⍵) (∇⍴f (↑ ⍵)))
-      `(,(≢ ⍵)))
-    '(0)))
+  (if (list? (↑ ⍵))
+    (cons (≢ ⍵) (∇⍴f (↑ ⍵)))
+    `(,(≢ ⍵))))
 
 (define (∇⍴g ⍺ ⍵)
   (if (= (≢ ⍺) 1)
     (↑∞ (↑ ⍺) ⍵)
-    (let ((χ (←/ (λ (acc _)
-                   (let ((r (∇⍴g (↓ ⍺) (↑↓ acc))))
-                     `(,(cons (↑ r) (↑ acc)) ,(↑↓ r))))
-                         (list '() ⍵)
-                         (⍳ (↑ ⍺)))))
-      `(,(⊖ (↑ χ)) ,(↑↓ χ)))))
+    (let ((shape (←/ (λ (acc _)
+                      (let ((r (∇⍴g (↓ ⍺) (↑↓ acc))))
+                        `(,(cons (↑ r) (↑ acc)) ,(↑↓ r))))
+                     `(() ,⍵)
+                     (⍳ (↑ ⍺)))))
+      `(,(⊖ (↑ shape)) ,(↑↓ shape)))))
 
 (← ⍴ ∇⍴f
-     (λ (⍺ ⍵) (↑ (∇⍴g ⍺ (apply circular-list ⍵)))))
+     (λ (⍺ ⍵) (↑ (∇⍴g ⍺ (⌂ circular-list ⍵)))))
 
 (define (∇⍉f ⍵)
-  (cond ((or (not (list? ⍵)) (not (list? (↑ ⍵)))) ⍵)
-        ((null? (↑ ⍵)) '())
+  (cond ((not (list? (↑ ⍵))) ⍵)
+        ((⍬? (↑ ⍵)) ⍬)
         (else (cons (→ ↑ ⍵) (∇⍉f (→ ↓ ⍵))))))
 
 (← ⍉ ∇⍉f)
 
-(← ⌈ (λ (⍵  ) (inexact->exact (ceiling ⍵)))
+(← ⌈ (λ (⍵  ) (≅⊥=(ceiling ⍵)))
      (λ (⍺ ⍵) (if (> ⍺ ⍵) ⍺ ⍵)))
 
-(← ⌊ (λ (⍵  ) (inexact->exact (floor ⍵)))
+(← ⌊ (λ (⍵  ) (≅⊥= (floor ⍵)))
      (λ (⍺ ⍵) (if (< ⍺ ⍵) ⍺ ⍵)))
+
+(← ߸ flatten
+     append)
