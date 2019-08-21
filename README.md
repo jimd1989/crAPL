@@ -106,9 +106,9 @@ Split the items of ⍵ into sublists in terms of ⍺. ⍺ can be a boolean, a fu
     
           ((1) (4 5))
     
-    (⌂ string (߸ (⊆ (string->list "davy jones") (string->list "wavy bones"))))
+    (⊆ (string->list "davy jones") (string->list "wavy bones"))
     
-          "avy ones"
+          ((#\a #\v #\y #\space) (#\o #\n #\e #\s))    
 
 ### (% ⍵)
 
