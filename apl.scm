@@ -32,6 +32,39 @@
 (← ↓ cdr
      (λ (⍺ ⍵) (drop ⍵ ⍺)))
 
+(← ⊂ (λ (⍵) `(,⍵))
+     cons)
+
+(define (∇⊆g⌂ ⍺ ⍵)
+  (cond ((boolean? ⍺) ⍺)
+        ((procedure? ⍺) (⍺ ⍵))
+        (else (equal? ⍺ ⍵))))
+
+(define (∇⊆g ⍺ ⍵)
+  (let ((xs (↑↓↓
+              (→/ (λ (x acc)
+                   (let* ((scalar? (eq? (↑ acc) 'scalar))
+                          (head (if scalar?
+                                  `(scalar ,(↑↓ acc))
+                                  `(vector ,(↓ (↑↓ acc)))))
+                          (pred (if scalar? (↑↓ acc) (↑ (↑↓ acc))))
+                          (tail (↑↓↓ acc)))
+                     (if (∇⊆g⌂ pred x)
+                       (߸ head (⊂ `(,(⊂ x (↑ tail)) ,@(↓ tail))))
+                       (if (⍬? (↑ tail))
+                         (߸ head (⊂ tail))
+                         (߸ head (⊂ `(() ,@tail)))))))
+                  (if (not (list? ⍺))
+                    `(scalar ,⍺ (()))
+                    `(vector ,(⊖ ⍺) (())))
+                  ⍵))))
+    (if (⍬? (↑ xs))
+      (↓ xs)
+      xs)))
+
+(← ⊆ (λ (⍵) (→ ⊂ ⍵))
+     ∇⊆g)
+
 (← ⍳ iota
      (λ (⍺ ⍵) (list-index (λ (x) (equal? ⍺ x)) ⍵)))
 
@@ -56,15 +89,15 @@
 
 (define (∇⍴f ⍵)
   (if (list? (↑ ⍵))
-    (cons (≢ ⍵) (∇⍴f (↑ ⍵)))
-    `(,(≢ ⍵))))
+    (⊂ (≢ ⍵) (∇⍴f (↑ ⍵)))
+    (⊂ (≢ ⍵))))
 
 (define (∇⍴g ⍺ ⍵)
   (if (= (≢ ⍺) 1)
     (↑∞ (↑ ⍺) ⍵)
     (let ((shape (←/ (λ (acc _)
                       (let ((r (∇⍴g (↓ ⍺) (↑↓ acc))))
-                        `(,(cons (↑ r) (↑ acc)) ,(↑↓ r))))
+                        `(,(⊂ (↑ r) (↑ acc)) ,(↑↓ r))))
                      `(() ,⍵)
                      (⍳ (↑ ⍺)))))
       `(,(⊖ (↑ shape)) ,(↑↓ shape)))))
@@ -75,7 +108,7 @@
 (define (∇⍉f ⍵)
   (cond ((not (list? (↑ ⍵))) ⍵)
         ((⍬? (↑ ⍵)) ⍬)
-        (else (cons (→ ↑ ⍵) (∇⍉f (→ ↓ ⍵))))))
+        (else (⊂ (→ ↑ ⍵) (∇⍉f (→ ↓ ⍵))))))
 
 (← ⍉ ∇⍉f)
 

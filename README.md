@@ -70,6 +70,45 @@ The length of the topmost axis (list) of ⍵.
     
           3
 
+### (⊂ ⍵)
+
+Enclose ⍵ in a list.
+
+    (⊂ 'hey)
+    
+          (hey)
+
+### (⊂ ⍺ ⍵)
+
+Cons ⍺ to list ⍵.
+
+    (⊂ 'hey '(how are you?))
+    
+          (hey how are you?)
+
+### (⊆ ⍵)
+
+Enclose all items of ⍵ into a sub-list.
+
+    (⊆ '(hey how are you))
+    
+          ((hey) (how) (are) (you))
+
+### (⊆ ⍺ ⍵)
+
+Split the items of ⍵ into sublists in terms of ⍺. ⍺ can be a boolean, a function, or a data type. If ⍺ is a boolean, the index of ⍵ will be kept/dropped depending on ⍺'s true/false value. If ⍺ is a function, the index of ⍵ will be kept if ⍺ satisfies the evaluation of (⍺ ⍵[i]). If ⍺ is any other type, the index of ⍵ will be kept if it matches an `(equal?)` call against ⍺. ⍺ can be a list of the same length as ⍵'s top axis, or it can be a scalar value, in which case ⍺ is applied to all indices of ⍵.
+
+    (⊆ number? '(1 hey 2 3 how 4 are you 5 6 ?))
+    
+          ((1) (2 3) (4) (5 6))
+    
+    (⊆ '(#t #f #f #t #t) '(1 2 3 4 5))
+    
+          ((1) (4 5))
+    
+    (⌂ string (߸ (⊆ (string->list "davy jones") (string->list "wavy bones"))))
+    
+          "avy ones"
 
 ### (% ⍵)
 
