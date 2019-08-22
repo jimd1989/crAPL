@@ -252,6 +252,22 @@ Select the lesser value between ⍺ and ⍵.
     
           1
 
+### (≡ ⍵)
+
+The maximum depth of ⍵.
+
+    (≡ '(1 (2) ((3)) (((4)))))
+    
+          4
+
+### (≡ ⍺ ⍵)
+
+Whether or not ⍺ and ⍵ are `(equal?)`.
+
+    (≡ (⍳ 9) (⍳ 9)
+    
+          #t
+
 ### (߸ ⍵)
 
 Flatten a list.

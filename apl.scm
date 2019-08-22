@@ -38,7 +38,7 @@
 (define (∇⊆g⌂ ⍺ ⍵)
   (cond ((boolean? ⍺) ⍺)
         ((procedure? ⍺) (⍺ ⍵))
-        (else (equal? ⍺ ⍵))))
+        (else (≡ ⍺ ⍵))))
 
 (define (∇⊆g ⍺ ⍵)
   (let ((xs (¨← (λ (acc x)
@@ -61,7 +61,7 @@
      ∇⊆g)
 
 (← ⍳ iota
-     (λ (⍺ ⍵) (list-index (λ (x) (equal? ⍺ x)) ⍵)))
+     (λ (⍺ ⍵) (list-index (λ (x) (≡ ⍺ x)) ⍵)))
 
 (define (∇⊖g ⍺ ⍵)
   (let* ((len (≢ ⍵))
@@ -113,13 +113,21 @@
 (← ⌊ (λ (⍵  ) (≅⊥= (floor ⍵)))
      (λ (⍺ ⍵) (if (< ⍺ ⍵) ⍺ ⍵)))
 
+(define (∇≡f ⍵)
+  (if (list? ⍵)
+    (¨←← ⌈ (¨ (λ (x) (+ 1 (∇≡f x))) ⍵))
+    0))
+
+(← ≡ ∇≡f
+     equal?)
+
 (← ߸ flatten
      append)
 
 (← ÷ (λ (⍵) (/ 1 ⍵))
      /)
 
-(define (≠ ⍺ ⍵) (not (equal? ⍺ ⍵)))
+(define (≠ ⍺ ⍵) (not (≡ ⍺ ⍵)))
 
 ; not very useful in its current form. Undocumented and unsupported for now.
 (define (∇⍣g ⍺ ⍵)
