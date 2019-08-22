@@ -119,6 +119,8 @@
 (← ÷ (λ (⍵) (/ 1 ⍵))
      /)
 
+(define (≠ ⍺ ⍵) (not (equal? ⍺ ⍵)))
+
 ; not very useful in its current form. Undocumented and unsupported for now.
 (define (∇⍣g ⍺ ⍵)
   (if (= ⍺ 1)

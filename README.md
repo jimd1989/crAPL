@@ -28,7 +28,7 @@ Some APL symbols conflict with Scheme syntax. They are represented as follows in
 
 crAPL procedures generally assume to be working on some kind of list. They will not check for other data types. These are standard Lisp lists; there is no extra tagging of rank, etc. As such, there are no implicit mapping operations of scalars against vectors, vectors against vectors, or anything else. Use normal Scheme functions like `(map)`.
 
-# Implemented primitives
+# Implemented primitive functions
 
 ### (↑ ⍵)
 
@@ -267,6 +267,14 @@ Append two lists. Technically not a dyadic function; you can concatenate any num
     (߸ '(1 2 3) '(4 5 6))
     
           (1 2 3 4 5 6)
+
+### (≠ ⍺ ⍵)
+
+Whether or not ⍺ and ⍵ are not `(equal?)`.
+
+    (≠ 'goose 'moose)
+    
+          #t
 
 # Other symbols
 

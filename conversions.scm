@@ -11,3 +11,4 @@
 (define s⊥cs string->list)
 (define s⊥n string->number)
 (define (s⊥ns s) (→ c⊥n (s⊥cs s)))
+(define (cs⊥s cs) (⌂ string cs))
