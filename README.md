@@ -264,7 +264,7 @@ The maximum depth of ⍵.
 
 Whether or not ⍺ and ⍵ are `(equal?)`.
 
-    (≡ (⍳ 9) (⍳ 9)
+    (≡ (⍳ 9) (⍳ 9))
     
           #t
 
