@@ -41,7 +41,7 @@
         (else (equal? ⍺ ⍵))))
 
 (define (∇⊆g ⍺ ⍵)
-  (let ((xs (←/ (λ (acc x)
+  (let ((xs (¨← (λ (acc x)
                  (let ((preds (↑ acc))
                        (parts (↑↓ acc)))
                    (if (∇⊆g⌂ (↑ preds) x)
@@ -54,10 +54,10 @@
                   `(,(⌂ circular-list (⊂ ⍺)) (())))
                 ⍵)))
     (if (⍬? (↑ (↑↓ xs)))
-      (⊖ (→ ⊖ (↓ (↑↓ xs))))
-      (⊖ (→ ⊖ (↑↓ xs))))))
+      (⊖ (¨ ⊖ (↓ (↑↓ xs))))
+      (⊖ (¨ ⊖ (↑↓ xs))))))
 
-(← ⊆ (λ (⍵) (→ ⊂ ⍵))
+(← ⊆ (λ (⍵) (¨ ⊂ ⍵))
      ∇⊆g)
 
 (← ⍳ iota
@@ -74,7 +74,7 @@
 (define (last-axis f ⍵)
   (if (not (list? ⍵))
     (f ⍵)
-    (→ f ⍵)))
+    (¨ f ⍵)))
 
 (← ⌽ (λ (⍵  ) (last-axis (λ (x) (⊖ x)) ⍵))
      (λ (⍺ ⍵) (last-axis (λ (x) (⊖ ⍺ x)) ⍵)))
@@ -90,7 +90,7 @@
 (define (∇⍴g ⍺ ⍵)
   (if (= (≢ ⍺) 1)
     (↑∞ (↑ ⍺) ⍵)
-    (let ((shape (←/ (λ (acc _)
+    (let ((shape (¨← (λ (acc _)
                       (let ((r (∇⍴g (↓ ⍺) (↑↓ acc))))
                         `(,(⊂ (↑ r) (↑ acc)) ,(↑↓ r))))
                      `(() ,⍵)
@@ -103,7 +103,7 @@
 (define (∇⍉f ⍵)
   (cond ((not (list? (↑ ⍵))) ⍵)
         ((⍬? (↑ ⍵)) ⍬)
-        (else (⊂ (→ ↑ ⍵) (∇⍉f (→ ↓ ⍵))))))
+        (else (⊂ (¨ ↑ ⍵) (∇⍉f (¨ ↓ ⍵))))))
 
 (← ⍉ ∇⍉f)
 
@@ -115,6 +115,9 @@
 
 (← ߸ flatten
      append)
+
+(← ÷ (λ (⍵) (/ 1 ⍵))
+     /)
 
 ; not very useful in its current form. Undocumented and unsupported for now.
 (define (∇⍣g ⍺ ⍵)

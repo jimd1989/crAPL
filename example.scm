@@ -28,8 +28,8 @@
 
 
 (define M (⍴ '(4 4) '(3 0 8 4 2 4 5 7 9 2 6 3 0 3 1 0)))
-(define h (→ (λ (⍵) (←// ⌈ ⍵)) M))
-(define v (→ (λ (⍵) (←// ⌈ ⍵)) (⍉ M)))
-(define limit (→ ⌊ h v))
-(define heights (→ (λ (⍵) (→ - limit ⍵)) M))
+(define h (¨ (λ (⍵) (¨←← ⌈ ⍵)) M))
+(define v (¨ (λ (⍵) (¨←← ⌈ ⍵)) (⍉ M)))
+(define limit (¨ ⌊ h v))
+(define heights (¨ (λ (⍵) (¨ - limit ⍵)) M))
 (define max-growth (⌂ + (߸ heights)))

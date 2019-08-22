@@ -274,17 +274,17 @@ Append two lists. Technically not a dyadic function; you can concatenate any num
 
 Scheme's normal lambda form can be represented with the Greek symbol, to make it more concise. This is nothing more than syntax sugar.
 
-### (→ f xs)
+### (¨ f xs)
 
 Sugar for `(map f xs)`.
 
-### (←/ f acc xs)
+### (¨← f acc xs)
 
-Sugar for `(foldl f acc xs)`. The procedure `(←// f xs)` performs a left fold where the initial accumulator value is the first item in list `xs.`
+Sugar for `(foldl f acc xs)`. The procedure `(¨←← f xs)` performs a left fold where the initial accumulator value is the first item in list `xs.`
 
-### (→/ f acc xs)
+### (¨→ f acc xs)
 
-Sugar for `(foldr f acc xs)`. The procedure `(→// f xs)` performs a right fold where the initial accumulator value is the first item in list `xs.`
+Sugar for `(foldr f acc xs)`. The procedure `(¨→→ f xs)` performs a right fold where the initial accumulator value is the first item in list `xs.`
 
 ### (⌂ f . xs)
 
@@ -298,7 +298,7 @@ Sugar for the null list `'()`. `⍬?` is an alias for `(null?)`.
 
 Max value of every row in a matrix
 
-    (→ (λ (⍵) (←// ⌈ ⍵)) (⍴ '(3 3) (⍳ 9)))
+    (¨ (λ (⍵) (¨←← ⌈ ⍵)) (⍴ '(3 3) (⍳ 9)))
     
           (2 5 8)
 
