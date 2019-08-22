@@ -27,10 +27,10 @@
 (← ≢ length)
 
 (← ↑ car
-     (λ (⍺ ⍵) (take ⍵ ⍺)))
+     (λ (⍺ ⍵) (if (negative? ⍺) (⊖ (take (⊖ ⍵) (% ⍺))) (take ⍵ ⍺))))
 
 (← ↓ cdr
-     (λ (⍺ ⍵) (drop ⍵ ⍺)))
+     (λ (⍺ ⍵) (if (negative? ⍺) (⊖ (drop (⊖ ⍵) (% ⍺))) (drop ⍵ ⍺))))
 
 (← ⊂ (λ (⍵) `(,⍵))
      cons)
@@ -115,3 +115,12 @@
 
 (← ߸ flatten
      append)
+
+; not very useful in its current form. Undocumented and unsupported for now.
+(define (∇⍣g ⍺ ⍵)
+  (if (= ⍺ 1)
+    (λ (x) (⍵ x))
+    (λ (x) (⍵ ((∇⍣g (- ⍺ 1) ⍵) x)))))
+
+(← ⍣ (λ (⍵) (λ (x) (⌂ ⍵ x)))
+     ∇⍣g)
