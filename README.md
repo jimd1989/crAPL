@@ -70,6 +70,8 @@ The length of the topmost axis (list) of ⍵.
     
           3
 
+There is no dyadic form of ≢ because its expected APL behavior is already handled by `(not (equal?))`, which is the definition of ≠.
+
 ### (⊂ ⍵)
 
 Enclose ⍵ in a list.
