@@ -96,7 +96,13 @@ Enclose all items of ⍵ into a sub-list.
 
 ### (⊆ ⍺ ⍵)
 
-Split the items of ⍵ into sublists in terms of ⍺. ⍺ can be a boolean, a function, or a data type. If ⍺ is a boolean, the index of ⍵ will be kept/dropped depending on ⍺'s true/false value. If ⍺ is a function, the index of ⍵ will be kept if ⍺ satisfies the evaluation of (⍺ ⍵[i]). If ⍺ is any other type, the index of ⍵ will be kept if it matches an `(equal?)` call against ⍺. ⍺ can be a list of the same length as ⍵'s top axis, or it can be a scalar value, in which case ⍺ is applied to all indices of ⍵.
+Split the items of ⍵ into sublists in terms of ⍺, where ⍺ is a scalar/list of boolean(s), predicate(s), or data.
+
++ If ⍺ is a boolean, it will accept/reject an index of ⍵ based upon its truthfulness.
++ If ⍺ is a predicate `f`, it will accept/reject an index `x` of ⍵ if `(f x)` evaluates to true.
++ If ⍺ is any other data type, it will accept/reject an index of ⍵ based upon whether or not they are `(equal?)`.
+
+⍺ does not have to be the same length as ⍵. Its indices are mapped across ⍵ in a cycle.
 
     (⊆ number? '(1 hey 2 3 how 4 are you 5 6 ?))
     
@@ -105,6 +111,10 @@ Split the items of ⍵ into sublists in terms of ⍺. ⍺ can be a boolean, a fu
     (⊆ '(#t #f #f #t #t) '(1 2 3 4 5))
     
           ((1) (4 5))
+    
+    (⊆ '(#t #t #f) '(1 2 3 4 5 6 7))
+    
+          ((1 2) (4 5) (7))
     
     (⊆ (string->list "davy jones") (string->list "wavy bones"))
     
