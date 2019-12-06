@@ -294,6 +294,14 @@ Whether or not ⍺ and ⍵ are not `(equal?)`.
     
           #t
 
+### (⍣ α ω)
+
+Where `α` is an integer and `ω` is a monodial function, compose a new monadic function that applies `ω` to its operand `α` times.
+
+    ((⍣ 5 (λ (x) (* x 2))) 2)
+    
+          64
+
 # Other symbols
 
 ### (λ (x ...) y ...)

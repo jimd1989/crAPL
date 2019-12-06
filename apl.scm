@@ -129,7 +129,6 @@
 
 (define (≠ ⍺ ⍵) (not (≡ ⍺ ⍵)))
 
-; not very useful in its current form. Undocumented and unsupported for now.
 (define (∇⍣g ⍺ ⍵)
   (if (= ⍺ 1)
     (λ (x) (⍵ x))
